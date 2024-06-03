@@ -10,7 +10,7 @@
 + Models : DB schema
 + Controllers : Functionality
 + Routes : Routing
-+ Middleware
++ Middleware : To use scripts for authentication,etc
 + Utils
 + More
 

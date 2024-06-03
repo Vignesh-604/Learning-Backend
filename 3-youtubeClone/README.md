@@ -3,13 +3,25 @@
 ## Dependencies
 > [!NOTE]  
 > (-D for dev-dependency; used for development only not production)
-- **nodemon:** to automatically restart the server after making changes `npm install --save-dev nodemo`
+- **nodemon:** to automatically restart the server after making changes `npm install --save-dev nodemon`
 - **prettier:** to maintain consistency (semicolon or not, tab spaces, etc) `npm i -D prettier`
 - **express:**
 - **mongoose:** Used to connect to mongodb
 - **dotenv:**
+- **cookie-parser:** to access and edit cookues from user browser
+- **cors:**
 
 ## Files
++ **src:**
+    - **index.js:** Initializes environment variables, connects to MongoDB, and starts the Express server upon successful database connection.
+    - **app.js::** 
+    - **db/index.js:** MongoDB connection using mongoose
+    - **utils:**
+        - **ApiError:** Standardized way to handle ApiErrors by extending and modifying Error class
+        - **ApiResponse:** Standardize the structure of responses sent from an API.
+        - **asyncHandler:** The asyncHandler function wraps asynchronous Express route handlers to ensure errors are caught and passed to the next middleware.
+
+
 - **package.json:** 
     - type: change type to module
     - scripts: to reload everytime changes are made
