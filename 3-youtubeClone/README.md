@@ -8,8 +8,11 @@
 - **express:**
 - **mongoose:** Used to connect to mongodb
 - **dotenv:**
-- **cookie-parser:** to access and edit cookues from user browser
+- **cookie-parser:** to access and edit cookies from user browser
 - **cors:**
+- **mongoose-aggregate-paginate-v2:** `npm i mongoose-aggregate-paginate-v2`
+- **bycrypt:** To encrypt and store passwords and decrypt when needed.
+- **jsonwebtoken:** To generate JWT tokens for authentication
 
 ## Files
 + **src:**
