@@ -13,6 +13,8 @@
 - **mongoose-aggregate-paginate-v2:** `npm i mongoose-aggregate-paginate-v2`
 - **bycrypt:** To encrypt and store passwords and decrypt when needed.
 - **jsonwebtoken:** To generate JWT tokens for authentication
+- **cloudinary:** to use Cloudinary, third party platform to store img, vids, etc
+- **multer:** used to upload files onto disk storage
 
 ## Files
 + **src:**
