@@ -18,4 +18,11 @@ app.use(express.static("public"))           // To store static files like images
 
 app.use(cookieParser())                     // To set and edit cookies
 
-export default app
+
+// Routes
+import userRouter from "./routes/user.routes.js"
+
+app.use("/users", userRouter)               // All urls followed by /users is defined in user routes
+// Prefix url ex. localhost/api/v1/users/register
+
+export {app}

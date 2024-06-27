@@ -19,13 +19,25 @@
 ## Files
 + **src:**
     - **index.js:** Initializes environment variables, connects to MongoDB, and starts the Express server upon successful database connection.
+
     - **app.js::** 
+
     - **db/index.js:** MongoDB connection using mongoose
+
     - **utils:**
         - **ApiError:** Standardized way to handle ApiErrors by extending and modifying Error class
         - **ApiResponse:** Standardize the structure of responses sent from an API.
         - **asyncHandler:** The asyncHandler function wraps asynchronous Express route handlers to ensure errors are caught and passed to the next middleware.
+        - **cloudinary.js:** Transfers files from the local directory to Cloudinary and handles cleanup of temporary files.
+    
+    - **middlewares:**
+        - **multer.middleware.js:** Handles file uploads and stores them temporarily in a local directory.
 
+    - **controllers:**
+        - **user.controllers.js:** Contains the registerUser function, which handles user registration and sends a simple JSON response.
+
+    - **routes:**
+        - **user.routes.js:** Routes after prefix /user
 
 - **package.json:** 
     - type: change type to module
