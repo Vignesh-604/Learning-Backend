@@ -1,6 +1,6 @@
 //
 
-export const asyncHandler = (requestHandler) => (res, req, next) => {   // passing a function as parameter
+export const asyncHandler = (requestHandler) => (req, res, next) => {   // passing a function as parameter
     Promise                                     // Either resolve or reject (Catch)
     .resolve(requestHandler(req, res, next))    // Send req, res to middleware for further processing
     .catch((err) => next(err))                  // Send Error to error handling middleware
