@@ -55,7 +55,8 @@ userSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next()
 
     // Hashes password with a salt rounds value of 10, which means the hashing process will apply 10 rounds of salting to the password.
-    this.password = bycrypt.hash(this.password, 10)     // encrypt password
+    this.password = await bycrypt.hash(this.password, 10)     // encrypt password
+    next()
 })
 
 // This method compares a given password with the hashed password stored in the database.
