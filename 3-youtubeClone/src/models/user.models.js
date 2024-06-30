@@ -66,14 +66,14 @@ userSchema.methods.isPasswordCorrect = async function(password){
 
 // This method generates a JWT access token with user details.
 userSchema.methods.generateAccessToken = function(){
-    jwt.sign(                                               //jwt.sign(dapayload or data, secretKey, options (Expiry))
+    return jwt.sign(                                               //jwt.sign(payload or data, secretKey, options (Expiry))
         {
             _id: this._id,
             email: this.email,
             username: this.username,
             fullname: this.fullname
         },
-        process.env,ACCESS_TOKEN_SECRET,
+        process.env.ACCESS_TOKEN_SECRET,
         {
             expiresIn: process.env.ACCESS_TOKEN_EXPIRY
         }
@@ -81,8 +81,9 @@ userSchema.methods.generateAccessToken = function(){
 }
 
 // This method generates a JWT refresh token with minimal user data.
-userSchema.methods.generateRefreshToken = function(){       // used to obtain a new access token when the current one expires.
-    jwt.sign(
+// used to obtain a new access token when the current one expires.
+userSchema.methods.generateRefreshToken = function(){
+    return jwt.sign(
         {
             _id: this._id,
         },

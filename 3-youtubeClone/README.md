@@ -16,6 +16,10 @@
 - **cloudinary:** to use Cloudinary, third party platform to store img, vids, etc
 - **multer:** used to upload files onto disk storage
 
+## API Testing done using Postman
+> [!NOTE]
+> Use Postman application for testing as Web one doesn't work with localhost and VS code extension doesn't send or read cookies.
+
 ## Files
 + **src:**
     - **index.js:** Initializes environment variables, connects to MongoDB, and starts the Express server upon successful database connection.
@@ -32,9 +36,10 @@
     
     - **middlewares:**
         - **multer.middleware.js:** Handles file uploads and stores them temporarily in a local directory.
+        - **auth.middleware.js:**verifies JWTs from cookies or headers for authentication and attaches the authenticated user to the request object.
 
     - **controllers:**
-        - **user.controllers.js:** Contains the registerUser function, which handles user registration and sends a simple JSON response.
+        - **user.controllers.js:** Contains the registerUser, loginUser and logoutUser functions, which handles user registration and sends a simple JSON response.
 
     - **routes:**
         - **user.routes.js:** Routes after prefix /user
