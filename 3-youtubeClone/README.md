@@ -46,7 +46,7 @@ Refresh tokens are used to obtain new access tokens after the current access tok
         - **auth.middleware.js:**verifies JWTs from cookies or headers for authentication and attaches the authenticated user to the request object.
 
     - **controllers:**
-        - **user.controllers.js:** Contains the registerUser, loginUser, logoutUser and refreshTokens functions to handle user related events.
+        - **user.controllers.js:** Contains the registerUser, loginUser, logoutUser and other functions to handle user related events.
 
     - **routes:**
         - **user.routes.js:** Routes after prefix /user
