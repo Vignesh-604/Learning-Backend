@@ -3,6 +3,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.models.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js"
+import jwt from "jsonwebtoken";
 
 // Steps to register new user:
 // Get user data from frontend
@@ -99,6 +100,9 @@ const generateAccessAndRefreshTokens = async (userId) => {
     }
 }
 
+// Cookies cannot be accessed by client-side scriptsand are sent by HTTPS only 
+const options = { httpOnly: true, secure: true }
+
 // Login and Logout using Postman vscode extension DOESN'T SEND COOKIES! Use Postman application!!
 const loginUser = asyncHandler(async (req, res) => {
 
@@ -124,9 +128,6 @@ const loginUser = asyncHandler(async (req, res) => {
     // Optional step: fetching details without passsword and tokens
     const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
 
-    // Cookies cannot be accessed by client-side scriptsand are sent by HTTPS only 
-    const options = { httpOnly: true, secure: true }
-
     return res.status(200)
         .cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
@@ -149,12 +150,50 @@ const logoutUser = asyncHandler(async (req, res) => {
         { new: true }
     )
 
-    const options = { httpOnly: true, secure: true }
-
     return res.status(200)
         .clearCookie("accessToken")     // clears tokens from cookies
         .clearCookie("refreshToken")
         .json(new ApiResponse(200, {}, "User logged out successfully!!"))
 })
 
-export { registerUser, loginUser, logoutUser }
+// The function handles the refresh token request by verifying the provided token, fetching the corresponding user,
+// checking the validity of the token, generating new tokens, and returning them in cookies.
+const refreshAccessToken = asyncHandler( async (req, res) => {
+
+    // Retrive refreshToken from cookie or body of request
+    const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
+
+    if (!incomingRefreshToken) throw new ApiError(401, "Unauthorized request")
+
+    try {
+        // Token is decoded to get user info
+        const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET)
+    
+        const user = await User.findById(decodedToken?._id)
+    
+        if (!user) throw new ApiError(401, "Invalid refresh Token")
+    
+        // Compares the incomingRefreshToken with the refresh token stored in the user's record
+        if (incomingRefreshToken !== user.refreshToken) throw new ApiError(402, "Refresh token is expired or used")
+    
+        // Generate new tokens
+        const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(user._id)
+    
+        return res.status(200)
+            .cookie("accessToken", accessToken, options)
+            .cookie("refreshToken", refreshToken, options)
+            .json(
+                new ApiResponse(
+                    200,
+                    {
+                        accessToken, refreshToken
+                    },
+                    "Access token refreshed"
+                )
+            )
+    } catch (error) {
+        throw new ApiError(403, "Something went wrong during refresh token generation")
+    }
+})
+
+export { registerUser, loginUser, logoutUser, refreshAccessToken }

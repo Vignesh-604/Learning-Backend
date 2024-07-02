@@ -20,6 +20,13 @@
 > [!NOTE]
 > Use Postman application for testing as Web one doesn't work with localhost and VS code extension doesn't send or read cookies.
 
+## Access and Refresh Token
+Access tokens are used to give access to protected resources in an application. They have a short lifespan and are issued when a user logs in. They're usually stored in headers (or cookies) of requests to access something. Access tokens usually contain information about the user (claims), such as the user ID, roles, and permissions
+
+Refresh tokens are used to obtain new access tokens after the current access token expires. This allows users to stay logged in even after the access token is expired as refresh tokens are used to generate new tokens. Refresh tokens have a longer lifespan than access tokens. It's stored in database and is used to verify to generate new access (and refresh) tokens
+
+
+
 ## Files
 + **src:**
     - **index.js:** Initializes environment variables, connects to MongoDB, and starts the Express server upon successful database connection.
@@ -39,7 +46,7 @@
         - **auth.middleware.js:**verifies JWTs from cookies or headers for authentication and attaches the authenticated user to the request object.
 
     - **controllers:**
-        - **user.controllers.js:** Contains the registerUser, loginUser and logoutUser functions, which handles user registration and sends a simple JSON response.
+        - **user.controllers.js:** Contains the registerUser, loginUser, logoutUser and refreshTokens functions to handle user related events.
 
     - **routes:**
         - **user.routes.js:** Routes after prefix /user
