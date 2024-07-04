@@ -17,8 +17,9 @@
 - **multer:** used to upload files onto disk storage
 
 ## API Testing done using Postman
-> [!NOTE]
-> Use Postman application for testing as Web one doesn't work with localhost and VS code extension doesn't send or read cookies.
+
+ - Use Postman application for testing as Web one doesn't work with localhost and VS code extension doesn't send or read cookies.
+- If postman doesn't work, try thunder client. Try removing image file and attaching again if image problems.
 
 ## Access and Refresh Token
 Access tokens are used to give access to protected resources in an application. They have a short lifespan and are issued when a user logs in. They're usually stored in headers (or cookies) of requests to access something. Access tokens usually contain information about the user (claims), such as the user ID, roles, and permissions

@@ -35,16 +35,16 @@ const registerUser = asyncHandler(async (req, res) => {
     if (existingUser) throw new ApiError(409, "User with email or username already exists")
 
     // Checking for images in local folder uploaded by multer
+    // console.log(req.files);
     const avatarPath = req.files?.avatar[0]?.path               // need checking for avatar img
     // const coverImagePath = req.files?.coverImage[0]?.path
 
     let coverImagePath
-    if (req.files.coverImage && Array.isArray(req.files.coverImage.length > 0)) coverImagePath = req.files?.coverImage[0]?.path
+    if (req.files?.coverImage && Array.isArray(req.files?.coverImage) && req.files.coverImage.length > 0) coverImagePath = req.files?.coverImage[0]?.path
 
     if (!avatarPath) {
         throw new ApiError(400, "Avatar Image is required")
     }
-    // console.log(req.files);
 
     // Uploading on Cloudinary and checking for img url
     const avatar = await uploadOnCloudinary(avatarPath)
@@ -270,6 +270,70 @@ const updateCoverImage = asyncHandler(async (req, res) => {
 
     res.status(200).json(new ApiResponse(200, user, "Cover Image changed successfully!!"))
 
+})
+
+const getUserChannelProfile = asyncHandler(async (req, res) => {
+
+    const { username } = req.params
+    if (!username) throw new ApiError(402, "Username is required!")
+
+    const channel = await User.aggregate([
+        {
+            $match: {
+                username: username?.toLowerCase()
+            },
+        },
+        {
+            $lookup: {                   // to get number of subscibers
+                from: "subscriptions",   //model is stored in lower case and in plural form
+                localField: "_id",
+                foreignField: "channel",
+                as: "subscribers"
+            },
+        },
+        {
+            $lookup: {                     // to get channles you've subscibed to
+                from: "subscriptions",
+                localField: "_id",
+                foreignField: "subscriber",
+                as: "subscribedTo"
+            },
+        },
+        {
+            $addFields: {
+                subscribersCount: {
+                    $size: "subscribers"
+                },
+                channelSubscribedTo: {
+                    size: "subscribedTo"
+                },
+                isSubscribed: {
+                    $cond: {
+                        if: { $in: [req.user?._id, "$subscribers.subscriber"] },
+                        then: true,
+                        else: false
+                    }
+                }
+            }
+        },
+        {
+            $project: {
+                fullname: 1,
+                username: 1,
+                email: 1,
+                avatar: 1,
+                coverImage: 1,
+                subscribersCount: 1,
+                channelSubscribedTo: 1,
+                isSubscribed: 1
+            }
+        }
+    ])
+
+    if (!channel?.length) throw new ApiError(404, "Channel does not exist")
+        console.log(channel);
+    
+    res.status(200).json(new ApiResponse(200, channel[0], "Channel found"))
 })
 
 export {
