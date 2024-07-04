@@ -212,7 +212,7 @@ const changePassword = asyncHandler(async (req, res) => {
 })
 
 const getCurrentUser = asyncHandler(async (req, res) => {
-    return res.status(200).json(200, res.user, "User fetched successfully")
+    return res.status(200).json(new ApiResponse(200, req.user, "User fetched successfully"))
 })
 
 const updateDetails = asyncHandler(async (req, res) => {
@@ -251,6 +251,8 @@ const updateAvatar = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, user, "Avatar changed successfully!!"))
 
 })
+
+// TODO : Delete old image from cloudinary
 
 const updateCoverImage = asyncHandler(async (req, res) => {
 
