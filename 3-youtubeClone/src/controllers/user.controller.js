@@ -280,16 +280,16 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
 
     const channel = await User.aggregate([
         {
-            $match: {
+            $match: {                               // match current user username
                 username: username?.toLowerCase()
             },
         },
         {
-            $lookup: {                   // to get number of subscibers
-                from: "subscriptions",   //model is stored in lower case and in plural form
-                localField: "_id",
-                foreignField: "channel",
-                as: "subscribers"
+            $lookup: {                      // to get number of subscibers
+                from: "subscriptions",      // model is stored in lower case and in plural form
+                localField: "_id",          // param user_id
+                foreignField: "channel",    // in channel field
+                as: "subscribers"           // create new set of documents with param user_id in channel field
             },
         },
         {
@@ -309,6 +309,8 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
                     $size: "$subscribedTo"
                 },
                 isSubscribed: {
+                    // subscribers document has param_user_id as the channel and multiple user_ids of subscribers
+                    // searching current userid in param_userid's subscriber list
                     $cond: {
                         if: { $in: [req.user?._id, "$subscribers.subscriber"] },
                         then: true,
@@ -318,7 +320,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
             }
         },
         {
-            $project: {
+            $project: {                 // payload to send from new aggregated data model
                 fullname: 1,
                 username: 1,
                 email: 1,

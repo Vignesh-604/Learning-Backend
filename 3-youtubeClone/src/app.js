@@ -21,8 +21,10 @@ app.use(cookieParser())                     // To set and edit cookies
 
 // Routes
 import userRouter from "./routes/user.routes.js"
+import tweetRouter from "./routes/tweet.routes.js"
 
 app.use("/users", userRouter)               // All urls followed by /users is defined in user routes
+app.use("/tweet", tweetRouter)
 // Prefix url ex. localhost/api/v1/users/register
 
 export {app}
