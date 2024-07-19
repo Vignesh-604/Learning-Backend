@@ -22,9 +22,18 @@ app.use(cookieParser())                     // To set and edit cookies
 // Routes
 import userRouter from "./routes/user.routes.js"
 import tweetRouter from "./routes/tweet.routes.js"
+// import commentRouter from "./routes/comment.routes.js"
+import likeRouter from "./routes/like.routes.js"
+// import playlistRouter from "./routes/playlist.routes.js"
+// import dashboardRouter from "./routes/dashboard.routes.js"
+// import videoRouter from "./routes/video.routes.js"
 
 app.use("/users", userRouter)               // All urls followed by /users is defined in user routes
 app.use("/tweet", tweetRouter)
-// Prefix url ex. localhost/api/v1/users/register
+// app.use("/comment", commentRouter)
+app.use("/like", likeRouter)
+// app.use("/playlist", playlistRouter)
+// app.use("/dashboard", dashboardRouter)
+// app.use("/video", videoRouter)
 
 export {app}
