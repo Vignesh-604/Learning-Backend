@@ -20,7 +20,7 @@ const toggleCommentLike = asyncHandler( async (req, res) => {
             likedBy: user,
             comment: commentId
         })
-        if (!tweetLike) throw new ApiError(402, "Could not dislike comment")
+        if (!commentLike) throw new ApiError(402, "Could not dislike comment")
 
         res.status(204).json( new ApiResponse(204, "", "Comment like removed"))
     } else {
@@ -28,7 +28,7 @@ const toggleCommentLike = asyncHandler( async (req, res) => {
             likedBy: user,
             comment: commentId
         })
-        if (!tweetLike) throw new ApiError(402, "Could not likecomment")
+        if (!commentLike) throw new ApiError(402, "Could not likecomment")
 
         res.status(202).json( new ApiResponse(202,commentLike, "Comment liked"))
     }
