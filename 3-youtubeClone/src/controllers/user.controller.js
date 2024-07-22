@@ -1,7 +1,7 @@
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.models.js"
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { deleteFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js"
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
@@ -249,6 +249,9 @@ const updateAvatar = asyncHandler(async (req, res) => {
         { new: true }
     ).select("-password")
 
+    const deleteOnCloud = await deleteFromCloudinary(req.user?.avatar)
+    console.log("Deleted old avatar");
+
     res.status(200).json(new ApiResponse(200, user, "Avatar changed successfully!!"))
 
 })
@@ -268,6 +271,9 @@ const updateCoverImage = asyncHandler(async (req, res) => {
         { $set: { coverImage: coverImage.url } },
         { new: true }
     ).select("-password")
+
+    const deleteOnCloud = await deleteFromCloudinary(req.user?.coverImage)
+    console.log("Deleted old cover image");
 
     res.status(200).json(new ApiResponse(200, user, "Cover Image changed successfully!!"))
 
