@@ -12,11 +12,13 @@ const videoSchema = new Schema({
     },
     title: {
         type: String,
-        required: true
+        required: true,
+        index:"text"
     },
     description: {
         type: String,
-        required: true
+        required: true,
+        index:"text"
     },
     duration: {
         type: Number,               // cloudinary url
@@ -32,12 +34,13 @@ const videoSchema = new Schema({
     },
     owner: {
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        index: true
     }
 },{
-    timestamps: true,
+    timestamps: true, index:true
 });
 
 videoSchema.plugin(mongooseAggregatePaginate)
 
-export const Video = mongoose.model('Video', Schema);
+export const Video = mongoose.model('Video', videoSchema);

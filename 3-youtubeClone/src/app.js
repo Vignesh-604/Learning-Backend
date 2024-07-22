@@ -26,7 +26,7 @@ import commentRouter from "./routes/comment.routes.js"
 import likeRouter from "./routes/like.routes.js"
 import playlistRouter from "./routes/playlist.routes.js"
 // import dashboardRouter from "./routes/dashboard.routes.js"
-// import videoRouter from "./routes/video.routes.js"
+import videoRouter from "./routes/video.routes.js"
 
 app.use("/users", userRouter)               // All urls followed by /users is defined in user routes
 app.use("/tweet", tweetRouter)
@@ -34,6 +34,6 @@ app.use("/comment", commentRouter)
 app.use("/like", likeRouter)
 app.use("/playlist", playlistRouter)
 // app.use("/dashboard", dashboardRouter)
-// app.use("/video", videoRouter)
+app.use("/video", videoRouter)
 
 export {app}

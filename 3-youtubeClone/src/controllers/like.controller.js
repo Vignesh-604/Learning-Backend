@@ -22,7 +22,7 @@ const toggleCommentLike = asyncHandler( async (req, res) => {
         })
         if (!commentLike) throw new ApiError(402, "Could not dislike comment")
 
-        res.status(204).json( new ApiResponse(204, "", "Comment like removed"))
+        res.status(202).json( new ApiResponse(202, "", "Comment like removed"))
     } else {
         commentLike = await Like.create({
             likedBy: user,
@@ -86,7 +86,7 @@ const toggleVideoLike = asyncHandler( async (req, res) => {
         })
         if (!videoLike) throw new ApiError(402, "Could not dislike Video")
 
-        res.status(204).json( new ApiResponse(204, "", "video like removed"))
+        res.status(202).json( new ApiResponse(202, "", "video like removed"))
     } else {
         videoLike = await Like.create({
             likedBy: user,
