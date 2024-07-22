@@ -27,6 +27,7 @@ import likeRouter from "./routes/like.routes.js"
 import playlistRouter from "./routes/playlist.routes.js"
 // import dashboardRouter from "./routes/dashboard.routes.js"
 import videoRouter from "./routes/video.routes.js"
+import subscriptioonRouter from "./routes/subscription.routes.js"
 
 app.use("/users", userRouter)               // All urls followed by /users is defined in user routes
 app.use("/tweet", tweetRouter)
@@ -35,5 +36,6 @@ app.use("/like", likeRouter)
 app.use("/playlist", playlistRouter)
 // app.use("/dashboard", dashboardRouter)
 app.use("/video", videoRouter)
+app.use("/subscription", subscriptioonRouter)
 
 export {app}
