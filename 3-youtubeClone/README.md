@@ -1,16 +1,16 @@
 # YT clone
-
+Backend for YT clone application
 ## Dependencies
 > [!NOTE]  
 > (-D for dev-dependency; used for development only not production)
 - **nodemon:** to automatically restart the server after making changes `npm install --save-dev nodemon`
 - **prettier:** to maintain consistency (semicolon or not, tab spaces, etc) `npm i -D prettier`
-- **express:**
+- **express:** To handle request, response, routing, etc
 - **mongoose:** Used to connect to mongodb
-- **dotenv:**
+- **dotenv:** To load environment variables
 - **cookie-parser:** to access and edit cookies from user browser
-- **cors:**
-- **mongoose-aggregate-paginate-v2:** `npm i mongoose-aggregate-paginate-v2`
+- **cors:** For Sharing data from different origins
+- **mongoose-aggregate-paginate-v2:** `npm i mongoose-aggregate-paginate-v2` To paginate aggregated data recieved from mongodb
 - **bycrypt:** To encrypt and store passwords and decrypt when needed.
 - **jsonwebtoken:** To generate JWT tokens for authentication
 - **cloudinary:** to use Cloudinary, third party platform to store img, vids, etc
@@ -46,10 +46,10 @@ Refresh tokens are used to obtain new access tokens after the current access tok
         - **multer.middleware.js:** Handles file uploads and stores them temporarily in a local directory.
         - **auth.middleware.js:**verifies JWTs from cookies or headers for authentication and attaches the authenticated user to the request object.
 
-    - **controllers:**
+    - **controllers:** Coontains controllers for different data models for ex. user
         - **user.controllers.js:** Contains the registerUser, loginUser, logoutUser and other functions to handle user related events.
 
-    - **routes:**
+    - **routes:** Routes used for HTTP routing
         - **user.routes.js:** Routes after prefix /user
 
 - **package.json:** 
