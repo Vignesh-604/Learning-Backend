@@ -105,10 +105,8 @@ const getLikedVideos = asyncHandler( async (req, res) => {
         likedBy: user,
         video: {$exists: true}
     })
-    
-    if (videos?.length) res.status(202).json( new ApiResponse(202, videos, "Liked videos fetched"))
-    
-    res.status(202).json( new ApiResponse(202, false, "No liked Videos"))
+
+    res.status(200).json( new ApiResponse(200, videos, "Liked videos fetched"))
 })
 
 export {

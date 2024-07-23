@@ -138,6 +138,13 @@ const getVideoById = asyncHandler(async (req, res) => {
         }
     ])
     if (!video || !video.length) throw new ApiError(400, "Didn't work")
+
+    // Increments views value 
+    await Video.findByIdAndUpdate(
+        videoId,
+        { $inc: {views: 1}},
+        {new: true}
+    ).select("views")
     
     res.status(201).json(new ApiResponse(201, video, "Video fetched successfully"))
 })
